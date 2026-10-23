@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
       if (count >= 12)
       {
         winTextObject.SetActive(true);
+        Destroy(GameObject.FindGameObjectWithTag("Enemy"));
       }
     }
     
@@ -57,6 +58,18 @@ public class PlayerController : MonoBehaviour
         other.gameObject.SetActive(false);
         count = count + 1;
         SetCountText();
+      }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+      Debug.Log($"{collision.transform.name} Collision");
+      if (collision.gameObject.CompareTag("Enemy"))
+      {
+        Destroy(gameObject);
+
+        winTextObject.gameObject.SetActive(true);
+        winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
       }
     }
 }
